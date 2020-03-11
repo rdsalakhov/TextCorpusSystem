@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="TextCorpusSystem" t="IncludeRecursive">
+        <e p="Annotatornotes.cs" t="Include" />
+        <e p="Anotes.cs" t="Include" />
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Relationnotes.cs" t="Include" />
+        <e p="Tagnames.cs" t="Include" />
+        <e p="Tags.cs" t="Include" />
+        <e p="textCorpusContext.cs" t="Include" />
+        <e p="TextCorpusSystem.csproj" t="IncludeRecursive" />
+        <e p="Texts.cs" t="Include" />
+        <e p="Useraccess.cs" t="Include" />
+        <e p="Users.cs" t="Include" />
+      </e>
+      <e p="TextCorpusSystem.sln" t="IncludeFlat" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_TextCorpusSystem.843891463.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
+  </component>
+</project>
