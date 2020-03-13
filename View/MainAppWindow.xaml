@@ -5,21 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainAppWindow" Height="720" Width="1024
+        Title="MainAppWindow" Height="720.333" Width="1024
 " WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        <Menu VerticalAlignment="Top" HorizontalAlignment="Left" Width="1024">
+        <Menu VerticalAlignment="Top" HorizontalAlignment="Left" Width="1024" Height="18">
             <MenuItem Header="Файл">
-                <MenuItem x:Name="ImportTextButton" Header="Импорт текста"/>
-                <MenuItem x:Name="OpenTextButton" Header="Открыть текст"/>
-                <MenuItem x:Name="ExportTextButton" Header="Экспорт текста"/>
+                <MenuItem x:Name="ImportTextButton" Header="Импорт текста" Click="ImportTextButton_Click"/>
+                <MenuItem x:Name="OpenTextButton" Header="Открыть текст" Click="OpenTextButton_Click" MouseEnter="OpenTextButton_MouseEnter">
+                    <ComboBox x:Name="TextsNamesComboBox" IsEditable="False" Width="120" ItemsSource="{Binding}" SelectionChanged="TextsNamesComboBox_SelectionChanged" DropDownOpened="TextsNamesComboBox_DropDownOpened"/>
+                </MenuItem>
+                <MenuItem x:Name="ExportTextButton" Header="Экспорт текста" IsEnabled="False" Click="ExportTextButton_Click"/>
                 <Separator/>
-                <MenuItem x:Name="DeleteTextButton" Header="Удалить текст"/>
-                <MenuItem x:Name="UpdateAnnotationButton" Header="Обновить аннотацию"/>
+                <MenuItem x:Name="DeleteTextButton" Header="Удалить текст" Click="DeleteTextButton_Click" IsEnabled="False"/>
+                <MenuItem x:Name="UpdateAnnotationButton" Header="Обновить аннотацию" IsEnabled="False" Click="UpdateAnnotationButton_Click"/>
                 <Separator/>
-                <MenuItem x:Name="ExitButton" Header="Выход"/>
+                <MenuItem x:Name="ExitButton" Header="Выход" Click="ExitButton_Click"/>
             </MenuItem>
-            <MenuItem Header="Поиск">
+            <MenuItem x:Name="SearchMenuItem" Header="Поиск" IsEnabled="False">
                 <MenuItem Header="Предустановленный запрос 1"/>
                 <MenuItem Header="Предустановленный запрос 2"/>
                 <MenuItem x:Name="CreateQueryButton" Header="Создать запрос"/>
@@ -29,11 +31,19 @@
                 <MenuItem x:Name="DeleteAccount" Header="Удалить аккаунт"/>
             </MenuItem>
         </Menu>
-        <RichTextBox x:Name="HighlitedTextRichTB" HorizontalAlignment="Left" Height="674" Margin="0,18,0,-0.5" VerticalAlignment="Top" Width="793" FontFamily="Calibri" FontSize="16" Block.LineHeight="6">
+        <RichTextBox x:Name="HighlightedTextRichTB" HorizontalAlignment="Left" Margin="0,18,0,0" Width="793" FontFamily="Calibri" FontSize="16" Block.LineHeight="6" IsReadOnly="True" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="RichTextBox"/>
+                    <Run Text="Файл -&gt; Открыть текст"/>
                 </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox x:Name="HighligthedTagsRichTB" Margin="793,18,0,0" FontFamily="Calibri" FontSize="16" Block.LineHeight="6" IsReadOnly="True"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <FlowDocument>
             </FlowDocument>
         </RichTextBox>
     </Grid>

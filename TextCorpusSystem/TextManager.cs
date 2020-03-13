@@ -7,12 +7,13 @@ using System.IO;
 using Npgsql;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace TextCorpusSystem
 {
-    class TextManager
+    public class TextManager
     {
-        static public void UploadText(StreamReader textStream, StreamReader annotationStream)
+        static public void UploadText(StreamReader textStream, StreamReader annotationStream, string textName)
         {
             string text = textStream.ReadToEnd();
             string annotation = annotationStream.ReadToEnd();
@@ -28,8 +29,15 @@ namespace TextCorpusSystem
                 long lastTextId = (long)lastTextIdQuery.ExecuteScalar();
                 long curTextId = lastTextId == 1 ? 1 : lastTextId + 1;
 
-                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation) values ($$'{text}'$$, $$'{annotation}'$$)", db);
-                uploadText.ExecuteNonQuery();
+                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation, textname) values ($$'{text}'$$, $$'{annotation}'$$, $$'{textName}'$$)", db);
+                try
+                {
+                    uploadText.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new TextNameAlreadyExistException();
+                }
 
                 NpgsqlCommand getTagIdOffset = new NpgsqlCommand("select last_value from tags_id_seq", db);
                 long tagIdOffset = (long)getTagIdOffset.ExecuteScalar();
@@ -176,6 +184,104 @@ namespace TextCorpusSystem
                 }
             }
             return true;
+        }
+
+        public static string GetText(int textId)
+        {
+            string text;
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                db.Open();
+                var getTextQuery = new NpgsqlCommand("select plaintext from texts where id = @textId", db);
+                getTextQuery.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
+                getTextQuery.Parameters["@textId"].Value = textId;
+                text = (string)getTextQuery.ExecuteScalar();
+            }
+            return text;
+        }
+
+        public static List<Tag> GetTags(int textId)
+        {
+            var tagList = new List<Tag>();
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                db.Open();
+                var getTagsQuery = new NpgsqlCommand("" +
+                    "select tags.startpos, tags.endpos, tagnames.tagname " +
+                    "from tags inner " +
+                    "join tagnames on tagnames.id = tags.nameid " +
+                    "where tags.textid = @textId", db);
+                getTagsQuery.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
+                getTagsQuery.Parameters["@textId"].Value = textId;
+                var tagsReader = getTagsQuery.ExecuteReader();
+
+
+                if (tagsReader.HasRows)
+                {
+                    while (tagsReader.Read())
+                    {
+                        tagList.Add(new Tag((string)tagsReader.GetValue(2), (int)tagsReader.GetValue(0), (int)tagsReader.GetValue(1)));
+                    }
+                }
+            }
+            return tagList;
+        }
+
+        public static DataSet GetTextsDataSet()
+        {
+            DataSet textsDataSet = new DataSet();
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                NpgsqlDataAdapter textsDataAdapter = new NpgsqlDataAdapter("select textname, id from texts", db);
+                textsDataAdapter.Fill(textsDataSet, "Texts");
+            }
+            return textsDataSet;
+        }
+
+        public static void DeleteText(int textId)
+        {
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                db.Open();
+                NpgsqlCommand deleteTextCommand = new NpgsqlCommand("delete from texts where id = @textId", db);
+                deleteTextCommand.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
+                deleteTextCommand.Parameters["@textId"].Value = textId;
+                deleteTextCommand.ExecuteNonQuery();
+            }
+        }
+
+        public static void UpdateTextAnnotation(int textId, StreamReader annotationStream)
+        {
+            string annotation = annotationStream.ReadToEnd();
+
+            if (!IsValidAnnotation(new StringReader(annotation)))
+                throw new InvalidAnnotationException();
+            var tagMatches = ResolveAnnotation(annotationStream);
+
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                db.Open();
+
+                NpgsqlCommand deleteOldTagsCommand = new NpgsqlCommand("delete from tags where textid = @textId", db);
+                deleteOldTagsCommand.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
+                deleteOldTagsCommand.Parameters["@textId"].Value = textId;
+                deleteOldTagsCommand.ExecuteNonQuery();
+
+                NpgsqlCommand updateAnnotationCommand = new NpgsqlCommand("update texts set annotation = $$'@newAnnotation'$$ where id = @textId", db);
+                updateAnnotationCommand.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
+                updateAnnotationCommand.Parameters["@textId"].Value = textId;
+                updateAnnotationCommand.Parameters.Add("@newAnnotation", NpgsqlTypes.NpgsqlDbType.Text);
+                updateAnnotationCommand.Parameters["@newAnnotation"].Value = annotation;
+                updateAnnotationCommand.ExecuteNonQuery();
+
+                NpgsqlCommand getTagIdOffset = new NpgsqlCommand("select last_value from tags_id_seq", db);
+                long tagIdOffset = (long)getTagIdOffset.ExecuteScalar();
+
+                UploadTextSpanTags(tagMatches[0], db, textId);
+                UploadANotes(tagMatches[1], db, tagIdOffset);
+                UploadSharpNotes(tagMatches[2], db, tagIdOffset);
+                UploadRelationTags(tagMatches[3], db, tagIdOffset);
+            }
         }
     }
 }

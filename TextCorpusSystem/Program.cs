@@ -15,7 +15,7 @@ namespace TextCorpusSystem
                 dbConnection.Open();
                 StreamReader annotationStream = new StreamReader("ABl_25_1-new.ann");
                 StreamReader textStream = new StreamReader("text1.txt");
-                TextManager.UploadText(textStream, annotationStream);
+                TextManager.UploadText(textStream, annotationStream, "default textname");
 
                 //NpgsqlCommand command = new NpgsqlCommand();
                 //command.CommandText = "insert into tagnames (tagname) values ('Preposition')";
