@@ -1,6 +1,5 @@
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.csprojAssemblyReference.cache
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.exe.config
-\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\MainWindow.g.cs
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\SignUpWindow.g.cs
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\App.g.cs
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View_MarkupCompile.cache
@@ -31,7 +30,6 @@
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\System.Numerics.Vectors.xml
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\System.Text.Encodings.Web.xml
-\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\MainWindow.baml
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\SignUpWindow.baml
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.g.resources
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.Properties.Resources.resources
@@ -39,3 +37,7 @@
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.csproj.CopyComplete
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.exe
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\View.pdb
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\SignInWindow.g.cs
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\SignInWindow.baml
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\MainAppWindow.g.cs
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\MainAppWindow.baml

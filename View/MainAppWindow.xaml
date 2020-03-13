@@ -1,0 +1,40 @@
+﻿<Window x:Class="View.MainAppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        mc:Ignorable="d"
+        Title="MainAppWindow" Height="720" Width="1024
+" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <Menu VerticalAlignment="Top" HorizontalAlignment="Left" Width="1024">
+            <MenuItem Header="Файл">
+                <MenuItem x:Name="ImportTextButton" Header="Импорт текста"/>
+                <MenuItem x:Name="OpenTextButton" Header="Открыть текст"/>
+                <MenuItem x:Name="ExportTextButton" Header="Экспорт текста"/>
+                <Separator/>
+                <MenuItem x:Name="DeleteTextButton" Header="Удалить текст"/>
+                <MenuItem x:Name="UpdateAnnotationButton" Header="Обновить аннотацию"/>
+                <Separator/>
+                <MenuItem x:Name="ExitButton" Header="Выход"/>
+            </MenuItem>
+            <MenuItem Header="Поиск">
+                <MenuItem Header="Предустановленный запрос 1"/>
+                <MenuItem Header="Предустановленный запрос 2"/>
+                <MenuItem x:Name="CreateQueryButton" Header="Создать запрос"/>
+            </MenuItem>
+            <MenuItem Header="Аккаунт">
+                <MenuItem x:Name="ManageAccessButton" Header="Управлять доступом"/>
+                <MenuItem x:Name="DeleteAccount" Header="Удалить аккаунт"/>
+            </MenuItem>
+        </Menu>
+        <RichTextBox x:Name="HighlitedTextRichTB" HorizontalAlignment="Left" Height="674" Margin="0,18,0,-0.5" VerticalAlignment="Top" Width="793" FontFamily="Calibri" FontSize="16" Block.LineHeight="6">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</Window>

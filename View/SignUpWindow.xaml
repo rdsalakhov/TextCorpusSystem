@@ -5,17 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="Регистрация" Height="332.663" Width="333.148" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Регистрация" Height="332.663" Width="306.894" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
-        <TextBox x:Name="EmailBox" HorizontalAlignment="Left" Height="23" Margin="151,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="EmailBox" Height="23" Margin="151,62,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
         <Label Content="Электронная почта" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top"/>
         <Label Content="Пароль" HorizontalAlignment="Left" Margin="30,89,0,0" VerticalAlignment="Top"/>
-        <Label Content="Повторите пароль
-" HorizontalAlignment="Left" Margin="30,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="PasswordBox" HorizontalAlignment="Left" Height="23" Margin="151,92,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="RepeatPasswordBox" HorizontalAlignment="Left" Height="23" Margin="151,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button IsDefault="True" Click="AcceptClick" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="96,202,0,0" VerticalAlignment="Top" Width="130"/>
-        <Button IsCancel="True" Content="Назад" HorizontalAlignment="Left" Margin="96,244,0,0" VerticalAlignment="Top" Width="130"/>
-
+        <Label Content="Повторите пароль" HorizontalAlignment="Left" Margin="30,120,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="PasswordBox" Height="23" Margin="151,92,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBox x:Name="RepeatPasswordBox" Height="23" Margin="151,123,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Button IsDefault="True" Click="AcceptClick" Content="Зарегистрироваться" Margin="86,178,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130"/>
+        <Button IsCancel="True" Content="Назад" Margin="86,234,0,50" HorizontalAlignment="Left" Width="130"/>
     </Grid>
 </Window>
