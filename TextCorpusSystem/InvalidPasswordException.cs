@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace TextCorpusSystem
 {
     [Serializable]
-    internal class InvalidPasswordException : Exception
+    public class InvalidPasswordException : Exception
     {
         public InvalidPasswordException()
         {

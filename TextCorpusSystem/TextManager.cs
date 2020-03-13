@@ -28,7 +28,7 @@ namespace TextCorpusSystem
                 long lastTextId = (long)lastTextIdQuery.ExecuteScalar();
                 long curTextId = lastTextId == 1 ? 1 : lastTextId + 1;
 
-                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation) values ('{text}', $$'{annotation}'$$)", db);
+                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation) values ($$'{text}'$$, $$'{annotation}'$$)", db);
                 uploadText.ExecuteNonQuery();
 
                 NpgsqlCommand getTagIdOffset = new NpgsqlCommand("select last_value from tags_id_seq", db);
