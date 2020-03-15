@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\App.xaml
-3-2142970013
+4-459717927
 
-81246569099
-14-1591541434
-MainAppWindow.xaml;SignInWindow.xaml;SignUpWindow.xaml;
+9-839928510
+19-1983943927
+CreateQueryWindow.xaml;MainAppWindow.xaml;SignInWindow.xaml;SignUpWindow.xaml;
 
-True
+False
 

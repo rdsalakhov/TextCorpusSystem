@@ -23,10 +23,20 @@ namespace View
     /// </summary>
     public partial class MainAppWindow : Window
     {
+        private int _currentUserId;
+
         public MainAppWindow()
         {
             InitializeComponent();
             BindComboBox(TextsNamesComboBox);
+            this._currentUserId = 1;
+        }
+
+        public MainAppWindow(int userId)
+        {
+            InitializeComponent();
+            BindComboBox(TextsNamesComboBox);
+            this._currentUserId = userId;
         }
 
         private void OpenTextButton_Click(object sender, RoutedEventArgs e)
@@ -69,7 +79,6 @@ namespace View
                 DeleteTextButton.IsEnabled = false;
                 ExportTextButton.IsEnabled = false;
                 UpdateAnnotationButton.IsEnabled = false;
-                SearchMenuItem.IsEnabled = false;
             }
         }
 
@@ -121,10 +130,17 @@ namespace View
             if (selectedRow != null)
             {
                 var selectedId = (int)selectedRow.Row.ItemArray[1];
-                TextManager.DeleteText(selectedId);
-                HighlightedTextRichTB.Document = new FlowDocument();
-                HighligthedTagsRichTB.Document = new FlowDocument();
-                BindComboBox(TextsNamesComboBox);
+                if (UserAccountManager.CheckAdminStatus(_currentUserId) || UserAccountManager.CheckUserAccess(_currentUserId, selectedId))
+                {
+                    TextManager.DeleteText(selectedId);
+                    HighlightedTextRichTB.Document = new FlowDocument();
+                    HighligthedTagsRichTB.Document = new FlowDocument();
+                    BindComboBox(TextsNamesComboBox);
+                }
+                else
+                {
+                    MessageBox.Show("У вашего аккаунта нет доступа к изменению этого текста!", "Ошибка доступа");
+                }
             }
         }
 
@@ -134,22 +150,29 @@ namespace View
             if (selectedRow != null)
             {
                 var selectedId = (int)selectedRow.Row.ItemArray[1];
-                var openAnnotationFD = new OpenFileDialog();
-                openAnnotationFD.Filter = "Annotation files (*.ann)|*.ann";
-                openAnnotationFD.Title = "Выберите файл аннотации";
-                openAnnotationFD.Multiselect = false;
-                if (openAnnotationFD.ShowDialog() == true)
+                if (UserAccountManager.CheckAdminStatus(_currentUserId) || UserAccountManager.CheckUserAccess(_currentUserId, selectedId))
                 {
-                    var annotationSR = new StreamReader(openAnnotationFD.FileName);
-                    try
+                    var openAnnotationFD = new OpenFileDialog();
+                    openAnnotationFD.Filter = "Annotation files (*.ann)|*.ann";
+                    openAnnotationFD.Title = "Выберите файл аннотации";
+                    openAnnotationFD.Multiselect = false;
+                    if (openAnnotationFD.ShowDialog() == true)
                     {
-                        TextManager.UpdateTextAnnotation(selectedId, annotationSR);
-                        TextHighlighter.GetHighlightedText(selectedId, HighlightedTextRichTB, HighligthedTagsRichTB);
+                        var annotationSR = new StreamReader(openAnnotationFD.FileName);
+                        try
+                        {
+                            TextManager.UpdateTextAnnotation(selectedId, annotationSR);
+                            TextHighlighter.GetHighlightedText(selectedId, HighlightedTextRichTB, HighligthedTagsRichTB);
+                        }
+                        catch (InvalidConstraintException)
+                        {
+                            MessageBox.Show("Некорректный файл аннотации!", "Ошибка загрузки");
+                        }
                     }
-                    catch (InvalidConstraintException)
-                    {
-                        MessageBox.Show("Некорректный файл аннотации!", "Ошибка загрузки");
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("У вашего аккаунта нет доступа к изменению этого текста!", "Ошибка доступа");
                 }
             }
         }
@@ -168,6 +191,55 @@ namespace View
                 tr.Save(saveFS, DataFormats.Rtf);
                 saveFS.Close();
             }
+        }
+
+        public void DisplayQueryResults(List<QueryResult> queryResults)
+        {
+            TextsNamesComboBox.SelectedItem = null;
+            if (queryResults.Count != 0)
+            {
+                FlowDocument queryResultDoc = new FlowDocument();
+                int resultIndex = 1;
+                foreach (var result in queryResults)
+                {
+                    Run textNameRun = new Run($"{resultIndex++}. " + result.TextName);
+                    TextRange tr = new TextRange(textNameRun.ContentStart, textNameRun.ContentEnd);
+                    tr.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                    Paragraph textNameParagraph = new Paragraph(textNameRun);
+                    queryResultDoc.Blocks.Add(textNameParagraph);
+
+                    Run displayTextRun = new Run(result.Text);
+                    Paragraph displayTextParagraph = new Paragraph();
+                    FlowDocument bodyDoc = new FlowDocument(new Paragraph(displayTextRun));
+                    for (int i = 0; i < result.StartPositions.Count; i++)
+                    {
+                        bodyDoc = TextHighlighter.HighlighAtRange(bodyDoc, result.StartPositions[i], result.EndPositions[i]);
+                    }
+
+                    queryResultDoc.Blocks.Add(bodyDoc.Blocks.FirstBlock);
+                }
+                HighlightedTextRichTB.Document = queryResultDoc;
+                HighligthedTagsRichTB.Document = new FlowDocument();
+            }
+            else
+            {
+                HighlightedTextRichTB.Document = new FlowDocument(new Paragraph(new Run("Совпадений не найдено")));
+                HighligthedTagsRichTB.Document = new FlowDocument();
+            }
+        }
+
+        private void CreateQueryButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateQueryWindow queryWindow = new CreateQueryWindow(this);
+            queryWindow.Show();
+        }
+
+        private void DeleteAccount_Click(object sender, RoutedEventArgs e)
+        {
+            UserAccountManager.DeleteAccount(_currentUserId);
+            var newSignInWindow = new SignInWindow();
+            newSignInWindow.Show();
+            this.Close();
         }
     }
 }

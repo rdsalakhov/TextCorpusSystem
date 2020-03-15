@@ -23,8 +23,8 @@ namespace View
     {
         public SignInWindow()
         {
-            var mainWindow = new MainAppWindow();
-            mainWindow.Show();
+            //var mainWindow = new MainAppWindow();
+            //mainWindow.Show();
             InitializeComponent();
         }
 
@@ -53,9 +53,9 @@ namespace View
             {
                 try
                 {
-                    UserAccountManager.SignInUser(LoginBox.Text, PasswordBox.Text);
+                    int userId = UserAccountManager.SignInUser(LoginBox.Text, PasswordBox.Text);
                     MessageBox.Show("Success!");
-                    var mainWindow = new MainAppWindow();
+                    var mainWindow = new MainAppWindow(userId);
                     mainWindow.Show();
                     this.Close();
                 }

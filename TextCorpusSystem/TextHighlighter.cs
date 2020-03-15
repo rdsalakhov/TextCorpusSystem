@@ -13,6 +13,7 @@ namespace TextCorpusSystem
 {
     public class TextHighlighter
     {
+        static Color rangeHighlitingColor = Color.FromArgb(185, 250, 230, 0);
         public static void GetHighlightedText(int textId, RichTextBox textRTB, RichTextBox legendRTB)
         {
             string text = TextManager.GetText(textId);
@@ -92,5 +93,15 @@ namespace TextCorpusSystem
 
             return navigator;
         }
+
+        public static FlowDocument HighlighAtRange(FlowDocument doc, int startPos, int endPos)
+        {
+
+            TextRange tr = new TextRange(GetTextPointerAtOffset(doc, startPos), GetTextPointerAtOffset(doc, endPos));
+            tr.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(rangeHighlitingColor));
+            return doc;
+        }
     }
+
+    
 }

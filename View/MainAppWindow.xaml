@@ -21,14 +21,12 @@
                 <Separator/>
                 <MenuItem x:Name="ExitButton" Header="Выход" Click="ExitButton_Click"/>
             </MenuItem>
-            <MenuItem x:Name="SearchMenuItem" Header="Поиск" IsEnabled="False">
-                <MenuItem Header="Предустановленный запрос 1"/>
-                <MenuItem Header="Предустановленный запрос 2"/>
-                <MenuItem x:Name="CreateQueryButton" Header="Создать запрос"/>
+            <MenuItem x:Name="SearchMenuItem" Header="Поиск" IsEnabled="True">
+                <MenuItem x:Name="CreateQueryButton" Header="Создать запрос" Click="CreateQueryButton_Click"/>
             </MenuItem>
             <MenuItem Header="Аккаунт">
                 <MenuItem x:Name="ManageAccessButton" Header="Управлять доступом"/>
-                <MenuItem x:Name="DeleteAccount" Header="Удалить аккаунт"/>
+                <MenuItem x:Name="DeleteAccount" Header="Удалить аккаунт" Click="DeleteAccount_Click"/>
             </MenuItem>
         </Menu>
         <RichTextBox x:Name="HighlightedTextRichTB" HorizontalAlignment="Left" Margin="0,18,0,0" Width="793" FontFamily="Calibri" FontSize="16" Block.LineHeight="6" IsReadOnly="True" 

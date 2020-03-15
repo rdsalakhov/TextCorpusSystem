@@ -29,7 +29,7 @@ namespace TextCorpusSystem
                 long lastTextId = (long)lastTextIdQuery.ExecuteScalar();
                 long curTextId = lastTextId == 1 ? 1 : lastTextId + 1;
 
-                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation, textname) values ($$'{text}'$$, $$'{annotation}'$$, $$'{textName}'$$)", db);
+                NpgsqlCommand uploadText = new NpgsqlCommand($"insert into texts (plaintext, annotation, textname) values ($${text}$$, $${annotation}$$, $${textName}$$)", db);
                 try
                 {
                     uploadText.ExecuteNonQuery();
@@ -92,7 +92,7 @@ namespace TextCorpusSystem
                 NpgsqlCommand uploadTextSpanTag = new NpgsqlCommand();
                 uploadTextSpanTag.Connection = db;
                 uploadTextSpanTag.CommandText = $"insert into tags (startpos, endpos, taggedtext, textid, nameid) values " +
-                    $"({match.Groups[3].Value}, {match.Groups[4].Value}, $$'{match.Groups[5].Value}'$$, '{curTextId}', '{tagNameId}')";
+                    $"({match.Groups[3].Value}, {match.Groups[4].Value}, $${match.Groups[5].Value}$$, '{curTextId}', '{tagNameId}')";
                 uploadTextSpanTag.ExecuteNonQuery();
             }
         }
@@ -133,7 +133,7 @@ namespace TextCorpusSystem
                 NpgsqlCommand uploadSharpTag = new NpgsqlCommand();
                 uploadSharpTag.Connection = db;
                 uploadSharpTag.CommandText = $"insert into annotatorNotes (tagid, annotationtext) values " +
-                    $"({relatedTagId}, $$'{match.Groups[4].Value}'$$)";
+                    $"({relatedTagId}, $${match.Groups[4].Value}$$)";
                 uploadSharpTag.ExecuteNonQuery();
             }
         }
@@ -238,6 +238,17 @@ namespace TextCorpusSystem
             return textsDataSet;
         }
 
+        public static DataSet GetLemmaTagsDataSet()
+        {
+            DataSet tagsDataSet = new DataSet();
+            using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                NpgsqlDataAdapter textsDataAdapter = new NpgsqlDataAdapter("select distinct on (tagname) tagname from lemmatags", db);
+                textsDataAdapter.Fill(tagsDataSet, "lemmatags");
+            }
+            return tagsDataSet;
+        }
+
         public static void DeleteText(int textId)
         {
             using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -267,7 +278,7 @@ namespace TextCorpusSystem
                 deleteOldTagsCommand.Parameters["@textId"].Value = textId;
                 deleteOldTagsCommand.ExecuteNonQuery();
 
-                NpgsqlCommand updateAnnotationCommand = new NpgsqlCommand("update texts set annotation = $$'@newAnnotation'$$ where id = @textId", db);
+                NpgsqlCommand updateAnnotationCommand = new NpgsqlCommand("update texts set annotation = $$@newAnnotation$$ where id = @textId", db);
                 updateAnnotationCommand.Parameters.Add("@textId", NpgsqlTypes.NpgsqlDbType.Integer);
                 updateAnnotationCommand.Parameters["@textId"].Value = textId;
                 updateAnnotationCommand.Parameters.Add("@newAnnotation", NpgsqlTypes.NpgsqlDbType.Text);
