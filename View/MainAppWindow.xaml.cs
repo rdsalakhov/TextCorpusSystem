@@ -114,7 +114,11 @@ namespace View
                     catch (TextNameAlreadyExistException)
                     {
                         MessageBox.Show("Текст с таким именем уже существует!", "Ошибка загрузки");
-                    }                    
+                    } 
+                    catch (InvalidAnnotationException)
+                    {
+                        MessageBox.Show("Некорректный формат аннотации!", "Ошибка загрузки");
+                    }
                 }
             }
         }
@@ -240,6 +244,19 @@ namespace View
             var newSignInWindow = new SignInWindow();
             newSignInWindow.Show();
             this.Close();
+        }
+
+        private void ManageAccessButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserAccountManager.CheckAdminStatus(_currentUserId))
+            {
+                AccessManagerWindow accessManagerWindow = new AccessManagerWindow();
+                accessManagerWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Доступно только для пользователей со статусом администратора!", "Ошибка");
+            }
         }
     }
 }

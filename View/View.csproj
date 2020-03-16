@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccessManagerWindow.xaml.cs">
+      <DependentUpon>AccessManagerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateQueryWindow.xaml.cs">
       <DependentUpon>CreateQueryWindow.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,10 @@
     <Compile Include="SignUpWindow.xaml.cs">
       <DependentUpon>SignUpWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccessManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateQueryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

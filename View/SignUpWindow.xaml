@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="Регистрация" Height="332.663" Width="306.894" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="Регистрация" Height="297.597" Width="302.28" SizeToContent="Manual" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
-        <TextBox x:Name="EmailBox" Height="23" Margin="151,62,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBox x:Name="EmailBox" Height="23" Margin="151,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
         <Label Content="Электронная почта" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top"/>
         <Label Content="Пароль" HorizontalAlignment="Left" Margin="30,89,0,0" VerticalAlignment="Top"/>
         <Label Content="Повторите пароль" HorizontalAlignment="Left" Margin="30,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="PasswordBox" Height="23" Margin="151,92,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <TextBox x:Name="RepeatPasswordBox" Height="23" Margin="151,123,30,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBox x:Name="PasswordBox" Height="23" Margin="151,92,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
+        <TextBox x:Name="RepeatPasswordBox" Height="23" Margin="151,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
         <Button IsDefault="True" Click="AcceptClick" Content="Зарегистрироваться" Margin="86,178,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130"/>
-        <Button IsCancel="True" Content="Назад" Margin="86,234,0,50" HorizontalAlignment="Left" Width="130"/>
+        <Button IsCancel="True" Content="Назад" Margin="86,234,0,0" HorizontalAlignment="Left" Width="130" Height="20" VerticalAlignment="Top"/>
     </Grid>
 </Window>

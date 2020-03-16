@@ -59,3 +59,5 @@
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
 \\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\AccessManagerWindow.g.cs
+\\Mac\Home\Desktop\projects\2019-2020\C#\TextCorpusSystem\View\obj\Debug\AccessManagerWindow.baml

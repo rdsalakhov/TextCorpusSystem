@@ -75,7 +75,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionInvalidAnnotationException.cs" />
+    <Compile Include="InvalidAnnotationException.cs" />
     <Compile Include="InvalidPasswordException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

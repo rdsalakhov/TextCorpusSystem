@@ -1,0 +1,19 @@
+﻿<Window x:Class="View.AccessManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        mc:Ignorable="d"
+        Title="Управление аккаунтами" Height="262.76" Width="315.672" ResizeMode="CanMinimize">
+    <Grid Height="169" VerticalAlignment="Top">
+        <ComboBox x:Name="NonAdminTextComboBox" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="NonAdminTextComboBox_DropDownOpened"/>
+        <ComboBox x:Name="TextsComboBox" HorizontalAlignment="Left" Margin="165,39,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="TextsComboBox_DropDownOpened"/>
+        <Label Content="Доступ к изменению текста" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="3"/>
+        <Label Content="Статус администратора" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="3"/>
+        <ComboBox x:Name="NonAdminsComboBox" HorizontalAlignment="Left" Margin="10,161,0,-14" VerticalAlignment="Top" Width="120" DropDownOpened="NonAdminsComboBox_DropDownOpened"/>
+        <Button x:Name="GrantTextAccess" Content="Предоставить" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Width="99" Click="GrantTextAccess_Click"/>
+        <Button x:Name="GranrAdminStatus" Content="Предоставить" HorizontalAlignment="Left" Margin="10,199,0,-50" VerticalAlignment="Top" Width="99" Click="GranrAdminStatus_Click"/>
+        <Button x:Name="RemoveTextAccessButton" Content="Лишить" HorizontalAlignment="Left" Margin="138,82,0,0" VerticalAlignment="Top" Width="75" Click="RemoveTextAccessButton_Click"/>
+    </Grid>
+</Window>

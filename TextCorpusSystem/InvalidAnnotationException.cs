@@ -5,7 +5,7 @@ namespace TextCorpusSystem
 {
     // TODO: refactor this
     [Serializable]
-    internal class InvalidAnnotationException : Exception
+    public class InvalidAnnotationException : Exception
     {
         public InvalidAnnotationException()
         {

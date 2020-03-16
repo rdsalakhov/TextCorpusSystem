@@ -25,7 +25,7 @@
                 <MenuItem x:Name="CreateQueryButton" Header="Создать запрос" Click="CreateQueryButton_Click"/>
             </MenuItem>
             <MenuItem Header="Аккаунт">
-                <MenuItem x:Name="ManageAccessButton" Header="Управлять доступом"/>
+                <MenuItem x:Name="ManageAccessButton" Header="Управлять доступом" Click="ManageAccessButton_Click"/>
                 <MenuItem x:Name="DeleteAccount" Header="Удалить аккаунт" Click="DeleteAccount_Click"/>
             </MenuItem>
         </Menu>

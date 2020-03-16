@@ -118,7 +118,7 @@ namespace TextCorpusSystem
             {
                 db.Open();
 
-                string grantAdminStatusCommandString = "update users set isadmin = True where user_id = @userId";
+                string grantAdminStatusCommandString = "update users set isadmin = True where id = @userId";
                 NpgsqlCommand grantAdminStatusCommand = new NpgsqlCommand(grantAdminStatusCommandString, db);
                 grantAdminStatusCommand.Parameters.Add("@userid", NpgsqlTypes.NpgsqlDbType.Integer);
                 grantAdminStatusCommand.Parameters["@userid"].Value = userId;
@@ -127,7 +127,7 @@ namespace TextCorpusSystem
             }
         }
 
-        public static void GrantAccessToText(int userId, int textId)
+        public static bool GrantAccessToText(int userId, int textId)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
@@ -141,16 +141,53 @@ namespace TextCorpusSystem
                 grantAccessCommand.Parameters.Add("@textid", NpgsqlTypes.NpgsqlDbType.Integer);
                 grantAccessCommand.Parameters["@textid"].Value = textId;
 
-                grantAccessCommand.ExecuteNonQuery();
+                try
+                {
+                    grantAccessCommand.ExecuteNonQuery();
+                    return true;
+                }
+                catch (PostgresException)
+                {
+                    return false; 
+                }
             }
         }
 
-        public DataSet GetUsersDataSet()
+        public static bool RemoveAccessToText(int userId, int textId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
+            {
+                db.Open();
+
+                string removeAccessCommandString = "delete from userAccess where user_id = @userId and text_id = @textId";
+                NpgsqlCommand removeAccessCommand = new NpgsqlCommand(removeAccessCommandString, db);
+                removeAccessCommand.Parameters.Add("@userid", NpgsqlTypes.NpgsqlDbType.Integer);
+                removeAccessCommand.Parameters["@userid"].Value = userId;
+                removeAccessCommand.Parameters.Add("@textid", NpgsqlTypes.NpgsqlDbType.Integer);
+                removeAccessCommand.Parameters["@textid"].Value = textId;
+
+                try
+                {
+                    if (removeAccessCommand.ExecuteNonQuery() == 0)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+                catch (PostgresException)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static DataSet GetNonAdminsDataSet()
         {
             DataSet usersDataSet = new DataSet();
             using (var db = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
-                NpgsqlDataAdapter usersDataAdapter = new NpgsqlDataAdapter("select id, login from users", db);
+                NpgsqlDataAdapter usersDataAdapter = new NpgsqlDataAdapter("select id, login from users where isadmin = false", db);
                 usersDataAdapter.Fill(usersDataSet, "users");
             }
             return usersDataSet;
